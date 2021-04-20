@@ -500,4 +500,17 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 *.tlog
 
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.SlimeGame.iml
+# Datasource local storage ignored files
+/../../../../../../../:\Unity\Projects\SlimeGame\.idea\.idea.SlimeGame\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
 # End of https://www.toptal.com/developers/gitignore/api/rider,unity,visualstudio
