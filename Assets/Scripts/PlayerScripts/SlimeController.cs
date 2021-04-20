@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public class SlimeController : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class SlimeController : MonoBehaviour
     public Rigidbody2D rb;
     public LineRenderer lr;
 
-    Vector3 dragStartPos;
+    Vector2 dragStartPos;
     Touch touch;
 
     private void Update()
@@ -35,25 +38,25 @@ public class SlimeController : MonoBehaviour
     void DragStart()
     {
         dragStartPos = Camera.main.ScreenToWorldPoint(touch.position);
-        dragStartPos.z = 0f;
         lr.positionCount = 1;
         lr.SetPosition(0, dragStartPos);
     }
     void Dragging()
     {
-        Vector3 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
-        draggingPos.z = 0f;
+        Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
+        Vector2 resultVector = Vector2.ClampMagnitude(
+            new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
         lr.positionCount = 2;
-        lr.SetPosition(1, draggingPos);
+        lr.SetPosition(1, new Vector2(
+            resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
     }
     void DragRelease()
     {
         lr.positionCount = 0;
-        Vector3 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
-        dragReleasePos.z = 0f;
+        Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
 
-        Vector3 force = dragStartPos - dragReleasePos;
-        Vector3 clampedForce = Vector3.ClampMagnitude(force, maxDrag) * power;
+        Vector2 force = dragStartPos - dragReleasePos;
+        Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
 
         rb.AddForce(clampedForce, ForceMode2D.Impulse);
     }
