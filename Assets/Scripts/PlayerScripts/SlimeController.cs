@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class SlimeController : MonoBehaviour
 {
@@ -71,6 +73,8 @@ public class SlimeController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        var hitRotation = Quaternion.FromToRotation(Vector3.up, other.contacts[0].normal);
+        transform.rotation = hitRotation;
         onGround = true;
         rigidBody.gravityScale = 0;
         rigidBody.velocity = Vector2.zero;
