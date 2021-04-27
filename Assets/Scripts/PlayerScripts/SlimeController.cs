@@ -14,7 +14,7 @@ public class SlimeController : MonoBehaviour
     public float maxDrag = 5f;
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
-    public bool onGround = false;
+    public bool canJump = false;
     Vector2 dragStartPos;
     Touch touch;
 
@@ -58,16 +58,14 @@ public class SlimeController : MonoBehaviour
         lineRenderer.positionCount = 0;
         Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
 
-        if (onGround)
+        if (canJump)
         {
             Vector2 force = dragStartPos - dragReleasePos;
             Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
             
             rigidBody.gravityScale = 2;
             rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
-            transform.rotation = Quaternion.identity;
-            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
-            onGround = false;
+            canJump = false;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.gray;
         }
@@ -78,11 +76,18 @@ public class SlimeController : MonoBehaviour
         Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
         hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
         transform.rotation = hitRotation;
-        onGround = true;
+        canJump = true;
         rigidBody.velocity = Vector2.zero;
         rigidBody.gravityScale = 0;
         rigidBody.angularVelocity = 0f;
         
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.gray;
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        canJump = true;
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }

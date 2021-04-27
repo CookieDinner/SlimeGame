@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="222284ab-cce6-4e9b-b367-2612fbb20bcc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SlimeGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SlimeGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle5.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle6.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle6.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle7.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle7.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle8.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Images/PlayerImages/IdleAnimation/Slime-idle8.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics/Bounce.physicsMaterial2D" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Physics/Bounce.physicsMaterial2D.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/SlimeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerScripts/SlimeController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +76,7 @@
       <workItem from="1619510863625" duration="119000" />
       <workItem from="1619511792698" duration="2773000" />
       <workItem from="1619518436963" duration="563000" />
-      <workItem from="1619519235405" duration="2356000" />
+      <workItem from="1619519235405" duration="4575000" />
     </task>
     <servers />
   </component>
