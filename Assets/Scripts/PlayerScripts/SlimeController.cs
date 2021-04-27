@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class SlimeController : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class SlimeController : MonoBehaviour
     public float maxDrag = 5f;
     public Rigidbody2D rb;
     public LineRenderer lr;
+    public bool onGround = true;
+    public int rotation;
+    public GameObject[] objectsArray;
+
+    private Vector3 targetRotation;
+
 
     Vector2 dragStartPos;
     Touch touch;
@@ -60,4 +67,41 @@ public class SlimeController : MonoBehaviour
 
         rb.AddForce(clampedForce, ForceMode2D.Impulse);
     }
+
+    private void rotateObject()
+    {
+        targetRotation.z = rotation;
+        gameObject.transform.eulerAngles = targetRotation;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        rb.velocity = new Vector2(0, 0);
+        rb.angularVelocity = 0;
+        rb.gravityScale = 0;
+
+        var relativePosition = transform.InverseTransformPoint(collision.transform.position);
+
+        if (relativePosition.x > 0.05f)
+        {
+            rotation = 90;
+        }
+        else if (relativePosition.x < -0.05f)
+        {
+            rotation = 270;
+        }
+
+        if (relativePosition.y > 0.05f)
+        {
+            rotation = 180;
+        }
+        else if (relativePosition.y < -0.05f)
+        {
+            rotation = 0;
+        }
+
+        rotateObject();
+    }
 }
+
+    
