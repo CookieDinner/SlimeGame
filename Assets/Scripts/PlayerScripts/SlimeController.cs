@@ -9,8 +9,9 @@ public class SlimeController : MonoBehaviour
 {
     public float power = 10f;
     public float maxDrag = 5f;
-    public Rigidbody2D rb;
-    public LineRenderer lr;
+    public Rigidbody2D rigidBody;
+    public LineRenderer lineRenderer;
+    public bool onGround = false;
 
     Vector2 dragStartPos;
     Touch touch;
@@ -38,26 +39,43 @@ public class SlimeController : MonoBehaviour
     void DragStart()
     {
         dragStartPos = Camera.main.ScreenToWorldPoint(touch.position);
-        lr.positionCount = 1;
-        lr.SetPosition(0, dragStartPos);
+        lineRenderer.positionCount = 1;
+        lineRenderer.SetPosition(0, dragStartPos);
     }
     void Dragging()
     {
         Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
         Vector2 resultVector = Vector2.ClampMagnitude(
             new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
-        lr.positionCount = 2;
-        lr.SetPosition(1, new Vector2(
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(1, new Vector2(
             resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
     }
     void DragRelease()
     {
-        lr.positionCount = 0;
+        lineRenderer.positionCount = 0;
         Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
 
-        Vector2 force = dragStartPos - dragReleasePos;
-        Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
+        if (onGround)
+        {
+            Vector2 force = dragStartPos - dragReleasePos;
+            Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
 
-        rb.AddForce(clampedForce, ForceMode2D.Impulse);
+            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
+            onGround = false;
+            rigidBody.gravityScale = 2;
+            lineRenderer.startColor = Color.red;
+            lineRenderer.endColor = Color.gray;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        onGround = true;
+        rigidBody.gravityScale = 0;
+        rigidBody.velocity = Vector2.zero;
+        rigidBody.angularVelocity = 0f;
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.gray;
     }
 }
