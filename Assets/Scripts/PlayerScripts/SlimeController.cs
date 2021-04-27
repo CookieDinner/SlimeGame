@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
@@ -61,10 +62,12 @@ public class SlimeController : MonoBehaviour
         {
             Vector2 force = dragStartPos - dragReleasePos;
             Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-
-            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
-            onGround = false;
+            
             rigidBody.gravityScale = 2;
+            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
+            transform.rotation = Quaternion.identity;
+            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+            onGround = false;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.gray;
         }
@@ -72,12 +75,14 @@ public class SlimeController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        var hitRotation = Quaternion.FromToRotation(Vector3.up, other.contacts[0].normal);
+        Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
+        hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
         transform.rotation = hitRotation;
         onGround = true;
-        rigidBody.gravityScale = 0;
         rigidBody.velocity = Vector2.zero;
+        rigidBody.gravityScale = 0;
         rigidBody.angularVelocity = 0f;
+        
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }
