@@ -79,6 +79,7 @@ public class SlimeController : MonoBehaviour
         targetRotation.z = rotation;
         gameObject.transform.eulerAngles = targetRotation;
     }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         onGround = true;
@@ -87,14 +88,14 @@ public class SlimeController : MonoBehaviour
         rigidBody.angularVelocity = 0f;
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
-        var relativePosition = transform.InverseTransformPoint(collision.transform.position);
+        var relativePosition = transform.InverseTransformPoint(other.transform.position);
 
         if (relativePosition.x > 0.05f)
         {
             rotation = 90;
         }
-        {
         else if (relativePosition.x < -0.05f)
+        {
             rotation = 270;
         }
 
@@ -102,8 +103,8 @@ public class SlimeController : MonoBehaviour
         {
             rotation = 180;
         }
-        {
         else if (relativePosition.y < -0.05f)
+        { 
             rotation = 0;
         }
 
