@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Mathematics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
@@ -13,7 +14,7 @@ public class SlimeController : MonoBehaviour
     public float maxDrag = 5f;
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
-    public bool onGround = false;
+    public bool canJump = false;
     Vector2 dragStartPos;
     Touch touch;
 
@@ -57,14 +58,14 @@ public class SlimeController : MonoBehaviour
         lineRenderer.positionCount = 0;
         Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
 
-        if (onGround)
+        if (canJump)
         {
             Vector2 force = dragStartPos - dragReleasePos;
             Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-
-            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
-            onGround = false;
+            
             rigidBody.gravityScale = 2;
+            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
+            canJump = false;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.gray;
         }
@@ -72,12 +73,21 @@ public class SlimeController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        var hitRotation = Quaternion.FromToRotation(Vector3.up, other.contacts[0].normal);
+        Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
+        hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
         transform.rotation = hitRotation;
-        onGround = true;
-        rigidBody.gravityScale = 0;
+        canJump = true;
         rigidBody.velocity = Vector2.zero;
+        rigidBody.gravityScale = 0;
         rigidBody.angularVelocity = 0f;
+        
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.gray;
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        canJump = true;
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }
