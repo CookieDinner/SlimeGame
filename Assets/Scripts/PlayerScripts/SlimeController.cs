@@ -14,12 +14,6 @@ public class SlimeController : MonoBehaviour
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
     public bool onGround = false;
-    public int rotation;
-    public GameObject[] objectsArray;
-
-    private Vector3 targetRotation;
-
-
     Vector2 dragStartPos;
     Touch touch;
 
