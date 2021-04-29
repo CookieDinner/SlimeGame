@@ -492,6 +492,7 @@ MonoBehaviour:
   rigidBody: {fileID: 542973954}
   lineRenderer: {fileID: 542973952}
   canJump: 0
+  animator: {fileID: 1613175946}
 --- !u!120 &542973952
 LineRenderer:
   m_ObjectHideFlags: 0
