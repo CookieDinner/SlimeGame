@@ -32,6 +32,15 @@ public class SlimeController : MonoBehaviour
             cinemachineVirtual = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<CinemachineVirtualCamera>();
         }
 
+        if (Input.touchCount > 0 && canJump == false)
+        {
+            touch = Input.GetTouch(0);
+            if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
+            {
+                animator.SetTrigger("Attack");
+            }
+        }
+
         if (Input.touchCount > 0 && canJump==true)
         {
             touch = Input.GetTouch(0);
@@ -48,6 +57,8 @@ public class SlimeController : MonoBehaviour
                 DragRelease();
             }
         }
+
+        
     }
 
     void DragStart()
