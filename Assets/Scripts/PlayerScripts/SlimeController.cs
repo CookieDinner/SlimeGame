@@ -32,7 +32,7 @@ public class SlimeController : MonoBehaviour
             cinemachineVirtual = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<CinemachineVirtualCamera>();
         }
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && canJump==true)
         {
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
@@ -111,7 +111,7 @@ public class SlimeController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        canJump = true;
+        //canJump = true;
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }
