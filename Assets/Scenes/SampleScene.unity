@@ -1192,7 +1192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnPoint: {fileID: 841981645}
   playerPrefab: {fileID: 3456165702835895835, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-  cameraBase: {fileID: 1996877645}
+  camera: {fileID: 1996877645}
 --- !u!4 &1018392368
 Transform:
   m_ObjectHideFlags: 0
@@ -1837,7 +1837,7 @@ GameObject:
   - component: {fileID: 1996877645}
   m_Layer: 0
   m_Name: CM vcam2
-  m_TagString: Untagged
+  m_TagString: Cinemachine
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
