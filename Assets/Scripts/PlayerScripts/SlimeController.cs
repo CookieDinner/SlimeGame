@@ -105,6 +105,13 @@ public class SlimeController : MonoBehaviour
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }
+
+    public void Damage()
+    {
+
+        Destroy(gameObject);
+
+    }
 }
 
     
