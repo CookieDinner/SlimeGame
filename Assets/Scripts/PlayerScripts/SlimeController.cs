@@ -55,6 +55,8 @@ public class SlimeController : MonoBehaviour
         Vector2 resultVector = Vector2.ClampMagnitude(
             new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
         lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(1, new Vector2(
+            resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
         Vector2 force = dragStartPos - draggingPos;
         Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
         float myForce = Convert.ToSingle(Math.Sqrt(Math.Pow(clampedForce.x, 2) + Math.Pow(clampedForce.y, 2)));
