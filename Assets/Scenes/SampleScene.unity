@@ -527,6 +527,7 @@ MonoBehaviour:
   maxDrag: 4
   rigidBody: {fileID: 542973954}
   lineRenderer: {fileID: 542973952}
+  cinemachineVirtual: {fileID: 1996877645}
   canJump: 0
   animator: {fileID: 1613175946}
 --- !u!120 &542973952
