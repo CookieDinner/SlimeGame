@@ -18,6 +18,8 @@ public class SlimeController : MonoBehaviour
     public CinemachineVirtualCamera cinemachineVirtual;
 
     public bool canJump = false;
+    public Animator animator;
+
     Vector2 dragStartPos;
     Touch touch;
 
@@ -51,19 +53,13 @@ public class SlimeController : MonoBehaviour
     {
         Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
         Vector2 resultVector = Vector2.ClampMagnitude(
-        new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
+            new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(1, new Vector2(
-        resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
-
         Vector2 force = dragStartPos - draggingPos;
         Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-
         float myForce = Convert.ToSingle(Math.Sqrt(Math.Pow(clampedForce.x, 2) + Math.Pow(clampedForce.y, 2)));
-
         cinemachineVirtual.m_Lens.OrthographicSize = 5 + myForce/8;
-
-        
+        animator.SetFloat("Force", myForce);
     }
     void DragRelease()
     {
@@ -80,6 +76,8 @@ public class SlimeController : MonoBehaviour
             canJump = false;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.gray;
+            animator.SetBool("InAir", true);
+            animator.SetFloat("Force", 0f);
         }
     }
 
@@ -95,9 +93,8 @@ public class SlimeController : MonoBehaviour
         
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
-
+        animator.SetBool("InAir", false);
         cinemachineVirtual.m_Lens.OrthographicSize = 5;
-
     }
 
     private void OnCollisionStay2D(Collision2D other)
