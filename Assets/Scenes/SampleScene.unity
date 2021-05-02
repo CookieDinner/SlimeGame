@@ -205,11 +205,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!4 &289329350 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-  m_PrefabInstance: {fileID: 3456165702295544294}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &352276157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,14 +2022,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.14
-      objectReference: {fileID: 0}
     - target: {fileID: 3456165702835880421, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -2078,18 +2065,6 @@ PrefabInstance:
     - target: {fileID: 3456165702835880421, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-      propertyPath: attackPoint
-      value: 
-      objectReference: {fileID: 289329350}
-    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-      propertyPath: attackRange
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-      propertyPath: enemyLayer.m_Bits
-      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: cinemachineVirtual
