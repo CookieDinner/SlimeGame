@@ -13,10 +13,14 @@ public class SlimeController : MonoBehaviour
 {
     public float power = 10f;
     public float maxDrag = 5f;
+    public float attackRange = 0.5f;
 
+    public Transform attackPoint;
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
     public CinemachineVirtualCamera cinemachineVirtual;
+    public LayerMask enemyLayer;
+
 
     public bool canJump = false;
     public Animator animator;
@@ -24,6 +28,24 @@ public class SlimeController : MonoBehaviour
     Vector2 dragStartPos;
     Touch touch;
 
+    /*private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }*/
+
+    void Attack()
+    {
+        animator.SetTrigger("Attack");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(100);
+        }
+    }
 
     private void Update()
     {
@@ -37,7 +59,7 @@ public class SlimeController : MonoBehaviour
             touch = Input.GetTouch(0);
             if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
             {
-                animator.SetTrigger("Attack");
+                Attack();
             }
         }
 
@@ -70,11 +92,9 @@ public class SlimeController : MonoBehaviour
     void Dragging()
     {
         Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
-        Vector2 resultVector = Vector2.ClampMagnitude(
-            new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
+        Vector2 resultVector = Vector2.ClampMagnitude(new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(1, new Vector2(
-            resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
+        lineRenderer.SetPosition(1, new Vector2(resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
         
         Vector2 force = dragStartPos - draggingPos;
         Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
@@ -99,6 +119,18 @@ public class SlimeController : MonoBehaviour
             canJump = false;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.gray;
+
+            Vector3 characterScale = transform.localScale;
+            if(clampedForce.x>0)
+            {
+                characterScale.x = -1;
+            }
+            else
+            {
+                characterScale.x = 1;
+            }
+            transform.localScale = characterScale;
+
             animator.SetBool("InAir", true);
             animator.SetFloat("Force", 0f);
         }

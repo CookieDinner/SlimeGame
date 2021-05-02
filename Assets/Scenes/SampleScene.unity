@@ -205,6 +205,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &289329350 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+  m_PrefabInstance: {fileID: 3456165702295544294}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &352276157
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +847,8 @@ GameObject:
   - component: {fileID: 840134366}
   - component: {fileID: 840134365}
   - component: {fileID: 840134364}
-  m_Layer: 0
+  - component: {fileID: 840134367}
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -940,6 +946,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840134367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840134363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7674eb4d6b9ca1440879d07bb4547fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &841981644
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,23 +1511,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1174025882 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3456165702835895835, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
-  m_PrefabInstance: {fileID: 3456165702295544294}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1174025888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174025882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdc7072d38042ec45a761bf5a63a11d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1183147977
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,6 +2027,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469138406486847064, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 3456165702835880421, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -2068,6 +2078,18 @@ PrefabInstance:
     - target: {fileID: 3456165702835880421, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 289329350}
+    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+      propertyPath: attackRange
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3456165702835895833, guid: 68adb9a76b747c145a70385ea148c879, type: 3}
       propertyPath: cinemachineVirtual
