@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3448341733283456970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.29, y: 0.16, z: -3.2742364}
+  m_LocalPosition: {x: -0.57, y: 0.14, z: -3.2742364}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3456165702835880421}
@@ -254,9 +254,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 3.3
   maxDrag: 4
+  attackRange: 0.8
+  attackRate: 2
+  attackPoint: {fileID: 1469138406486847064}
   rigidBody: {fileID: 3456165702835880420}
   lineRenderer: {fileID: 3456165702835880422}
   cinemachineVirtual: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   canJump: 0
   animator: {fileID: 3456165703903739244}
 --- !u!114 &3456165702835895832

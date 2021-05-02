@@ -14,6 +14,8 @@ public class SlimeController : MonoBehaviour
     public float power = 10f;
     public float maxDrag = 5f;
     public float attackRange = 0.5f;
+    public float attackRate = 1.5f;
+    float nextAttackTime = 0f;
 
     public Transform attackPoint;
     public Rigidbody2D rigidBody;
@@ -56,10 +58,14 @@ public class SlimeController : MonoBehaviour
 
         if (Input.touchCount > 0 && canJump == false)
         {
-            touch = Input.GetTouch(0);
-            if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
+            if (Time.time >= nextAttackTime)
             {
-                Attack();
+                touch = Input.GetTouch(0);
+                if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
+                {
+                    Attack();
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
             }
         }
 
@@ -79,8 +85,6 @@ public class SlimeController : MonoBehaviour
                 DragRelease();
             }
         }
-
-        
     }
 
     void DragStart()
@@ -113,26 +117,33 @@ public class SlimeController : MonoBehaviour
         {
             Vector2 force = dragStartPos - dragReleasePos;
             Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-            
-            rigidBody.gravityScale = 2;
-            rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
-            canJump = false;
-            lineRenderer.startColor = Color.red;
-            lineRenderer.endColor = Color.gray;
 
-            Vector3 characterScale = transform.localScale;
-            if(clampedForce.x>0)
+            if (Math.Abs(clampedForce.y) > 0.5f && Math.Abs(clampedForce.x) > 0.5f)
             {
-                characterScale.x = -1;
+                rigidBody.gravityScale = 2;
+                rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
+                canJump = false;
+                lineRenderer.startColor = Color.red;
+                lineRenderer.endColor = Color.gray;
+
+                Vector3 characterScale = transform.localScale;
+                if (clampedForce.x > 0)
+                {
+                    characterScale.x = -1;
+                }
+                else
+                {
+                    characterScale.x = 1;
+                }
+                transform.localScale = characterScale;
+
+                animator.SetBool("InAir", true);
+                animator.SetFloat("Force", 0f);
             }
             else
             {
-                characterScale.x = 1;
+                animator.SetFloat("Force", 0f);
             }
-            transform.localScale = characterScale;
-
-            animator.SetBool("InAir", true);
-            animator.SetFloat("Force", 0f);
         }
     }
 
