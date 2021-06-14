@@ -8,6 +8,7 @@ public class PlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Spikes")|| collision.gameObject.CompareTag("Enemy"))
         {
+            FindObjectOfType<AudioManager>().Play("SlimeDeath");
             Destroy(gameObject);
             LevelManager.instance.Respawn();
         }

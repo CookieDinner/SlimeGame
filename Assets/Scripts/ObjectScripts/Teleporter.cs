@@ -10,6 +10,7 @@ public class Teleporter : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
         if (collision.gameObject.tag == "Player")
         {
             Teleport();

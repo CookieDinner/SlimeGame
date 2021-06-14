@@ -8,6 +8,7 @@ TagManager:
   - Cinemachine
   - Enemy
   - Wall
+  - Key
   layers:
   - Default
   - TransparentFX

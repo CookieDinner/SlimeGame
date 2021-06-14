@@ -12,12 +12,14 @@ using Vector3 = UnityEngine.Vector3;
 public class SlimeController : MonoBehaviour
 {
     public float power = 10f;
+    public float distance = 0;
     public float maxDrag = 5f;
     public float attackRange = 0.5f;
     public float attackRate = 1.5f;
     float nextAttackTime = 0f;
 
     public Transform attackPoint;
+    public Transform groundDetection;
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
     public CinemachineVirtualCamera cinemachineVirtual;
@@ -40,6 +42,7 @@ public class SlimeController : MonoBehaviour
     void Attack()
     {
         animator.SetTrigger("Attack");
+        FindObjectOfType<AudioManager>().Play("SwordSlash");
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
@@ -56,20 +59,7 @@ public class SlimeController : MonoBehaviour
             cinemachineVirtual = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<CinemachineVirtualCamera>();
         }
 
-        if (Input.touchCount > 0 && canJump == false)
-        {
-            if (Time.time >= nextAttackTime)
-            {
-                touch = Input.GetTouch(0);
-                if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
-                {
-                    Attack();
-                    nextAttackTime = Time.time + 1f / attackRate;
-                }
-            }
-        }
-
-        if (Input.touchCount > 0 && canJump==true)
+        if (Input.touchCount > 0 && canJump == true)
         {
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
@@ -85,6 +75,21 @@ public class SlimeController : MonoBehaviour
                 DragRelease();
             }
         }
+
+        if (Input.touchCount > 0 && canJump == false)
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                touch = Input.GetTouch(0);
+                if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
+                {
+                    Attack();
+                    nextAttackTime = Time.time + 1f / attackRate;
+                }
+            }
+        }
+
+       
     }
 
     void DragStart()
@@ -118,33 +123,42 @@ public class SlimeController : MonoBehaviour
             Vector2 force = dragStartPos - dragReleasePos;
             Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
 
-            if (Math.Abs(clampedForce.y) > 0.5f && Math.Abs(clampedForce.x) > 0.5f)
+            if (Math.Abs(clampedForce.y) > 0.5f || Math.Abs(clampedForce.x) > 0.5f)
             {
-                rigidBody.gravityScale = 2;
-                rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
-                canJump = false;
-                lineRenderer.startColor = Color.red;
-                lineRenderer.endColor = Color.gray;
+               
+                    rigidBody.gravityScale = 2;
+                    rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
 
-                Vector3 characterScale = transform.localScale;
-                if (clampedForce.x > 0)
-                {
-                    characterScale.x = -1;
-                }
-                else
-                {
-                    characterScale.x = 1;
-                }
-                transform.localScale = characterScale;
+                    lineRenderer.startColor = Color.red;
+                    lineRenderer.endColor = Color.gray;
 
-                animator.SetBool("InAir", true);
-                animator.SetFloat("Force", 0f);
+                    Vector3 characterScale = transform.localScale;
+                    if (clampedForce.x > 0)
+                    {
+                        characterScale.x = -1;
+                    }
+                    else
+                    {
+                        characterScale.x = 1;
+                    }
+                    transform.localScale = characterScale;
             }
             else
             {
                 animator.SetFloat("Force", 0f);
             }
         }
+        else
+        {
+
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        canJump = false;
+        animator.SetBool("InAir", true);
+        animator.SetFloat("Force", 0f);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -153,19 +167,26 @@ public class SlimeController : MonoBehaviour
         hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
         transform.rotation = hitRotation;
         canJump = true;
-        rigidBody.velocity = Vector2.zero;
-        rigidBody.gravityScale = 0;
-        rigidBody.angularVelocity = 0f;
-        
+        animator.SetBool("InAir", false);
+
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            rigidBody.gravityScale = 0;
+            FindObjectOfType<AudioManager>().Play("SlimeStick");
+        }
+
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
-        animator.SetBool("InAir", false);
+        
         cinemachineVirtual.m_Lens.OrthographicSize = 5;
+        
+
     }
 
     private void OnCollisionStay2D(Collision2D other)
     {
         //canJump = true;
+        animator.SetFloat("Force", 0f);
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
     }

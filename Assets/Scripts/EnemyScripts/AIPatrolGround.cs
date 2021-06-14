@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIPatrol : MonoBehaviour
+public class AIPatrolGround : MonoBehaviour
 {
     public bool mustPatrol;
+    public bool groundPatrol;
+    public float distance;
     public float walkSpeed;
+
+
     public Rigidbody2D rb;
     public BoxCollider2D bodyCollider;
     public LayerMask wallLayer;
+    public Transform groundDetection;
+
+
     void Start()
     {
         mustPatrol = true;
@@ -17,20 +24,37 @@ public class AIPatrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mustPatrol)
+        if (groundPatrol == true)
         {
-            Patrol();
+            GroundPatrol();
+        }
+        else
+        {
+            PlatformPatrol();
         }
     }
 
-    void Patrol()
+
+    void PlatformPatrol()
     {
+        transform.Translate(Vector2.right * walkSpeed * Time.deltaTime);
+
+        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance);
+
+        if (groundInfo.collider == false)
+        {
+            Flip();
+        }
+    }
+
+    void GroundPatrol()
+    {
+        transform.Translate(Vector2.right * walkSpeed * Time.deltaTime);
 
         if (bodyCollider.IsTouchingLayers(wallLayer))
         {
             Flip();
         }
-        rb.velocity = new Vector2(walkSpeed * Time.fixedDeltaTime, rb.velocity.y);
     }
 
     void Flip()
