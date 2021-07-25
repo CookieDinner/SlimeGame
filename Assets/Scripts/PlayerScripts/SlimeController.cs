@@ -16,9 +16,11 @@ public class SlimeController : MonoBehaviour
     public float maxDrag = 5f;
     public float attackRange = 0.5f;
     public float attackRate = 1.5f;
-    float nextAttackTime = 0f;
+    //float nextAttackTime = 0f;
+    bool canAttack = true;
+    bool startedDragging = false;
 
-    public Transform attackPoint;
+    public CircleCollider2D attackPoint;
     public Transform groundDetection;
     public Rigidbody2D rigidBody;
     public LineRenderer lineRenderer;
@@ -43,21 +45,27 @@ public class SlimeController : MonoBehaviour
     {
         animator.SetTrigger("Attack");
         FindObjectOfType<AudioManager>().Play("SwordSlash");
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        attackPoint.enabled = true;
+        Invoke("disableAttackCollider" , 0.3f);
+        /*Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
         foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(100);
-        }
+        }*/
     }
+    void disableAttackCollider()
+    {
+        attackPoint.enabled = false;
+    }
+
 
     private void Update()
     {
-        if (!cinemachineVirtual)
+        /*if (!cinemachineVirtual)
         {
             cinemachineVirtual = GameObject.FindGameObjectWithTag("Cinemachine").GetComponent<CinemachineVirtualCamera>();
-        }
+        }*/
 
         if (Input.touchCount > 0 && canJump == true)
         {
@@ -78,13 +86,14 @@ public class SlimeController : MonoBehaviour
 
         if (Input.touchCount > 0 && canJump == false)
         {
-            if (Time.time >= nextAttackTime)
+            if (canAttack)//(Time.time >= nextAttackTime)
             {
                 touch = Input.GetTouch(0);
                 if (touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Moved)
                 {
                     Attack();
-                    nextAttackTime = Time.time + 1f / attackRate;
+                    //nextAttackTime = Time.time + 1f / attackRate;
+                    canAttack = false;
                 }
             }
         }
@@ -94,38 +103,44 @@ public class SlimeController : MonoBehaviour
 
     void DragStart()
     {
+        startedDragging = true;
         dragStartPos = Camera.main.ScreenToWorldPoint(touch.position);
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, dragStartPos);
     }
     void Dragging()
     {
-        Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
-        Vector2 resultVector = Vector2.ClampMagnitude(new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(1, new Vector2(resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
-        
-        Vector2 force = dragStartPos - draggingPos;
-        Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-        float myForce = Convert.ToSingle(Math.Sqrt(Math.Pow(clampedForce.x, 2) + Math.Pow(clampedForce.y, 2)));
+        if (startedDragging)
+        {
+            Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Vector2 resultVector = Vector2.ClampMagnitude(new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(1, new Vector2(resultVector.x + dragStartPos.x, resultVector.y + dragStartPos.y));
 
-        animator.SetFloat("Force", myForce);
-        cinemachineVirtual.m_Lens.OrthographicSize = 5 + myForce/8;
+            Vector2 force = dragStartPos - draggingPos;
+            Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
+            float myForce = Convert.ToSingle(Math.Sqrt(Math.Pow(clampedForce.x, 2) + Math.Pow(clampedForce.y, 2)));
+
+            animator.SetFloat("Force", myForce);
+            /*cinemachineVirtual.m_Lens.OrthographicSize = 5 + myForce/8;*/
+        }
        
     }
     void DragRelease()
     {
-        lineRenderer.positionCount = 0;
-        Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
-
-        if (canJump)
+        if (startedDragging)
         {
-            Vector2 force = dragStartPos - dragReleasePos;
-            Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
+            lineRenderer.positionCount = 0;
+            Vector2 dragReleasePos = Camera.main.ScreenToWorldPoint(touch.position);
 
-            if (Math.Abs(clampedForce.y) > 0.5f || Math.Abs(clampedForce.x) > 0.5f)
+            if (canJump)
             {
-               
+                Vector2 force = dragStartPos - dragReleasePos;
+                Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
+
+                if (Math.Abs(clampedForce.y) > 0.5f || Math.Abs(clampedForce.x) > 0.5f)
+                {
+
                     rigidBody.gravityScale = 2;
                     rigidBody.AddForce(clampedForce, ForceMode2D.Impulse);
 
@@ -142,15 +157,17 @@ public class SlimeController : MonoBehaviour
                         characterScale.x = 1;
                     }
                     transform.localScale = characterScale;
+                }
+                else
+                {
+                    animator.SetFloat("Force", 0f);
+                }
             }
             else
             {
-                animator.SetFloat("Force", 0f);
-            }
-        }
-        else
-        {
 
+            }
+            startedDragging = false;
         }
     }
 
@@ -159,14 +176,22 @@ public class SlimeController : MonoBehaviour
         canJump = false;
         animator.SetBool("InAir", true);
         animator.SetFloat("Force", 0f);
+        rigidBody.gravityScale = 2;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        FindObjectOfType<AudioManager>().Stop("SwordSlash");
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            return;
+        }
         Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
         hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
         transform.rotation = hitRotation;
         canJump = true;
+        canAttack = true;
+        attackPoint.enabled = false;
         animator.SetBool("InAir", false);
 
         if (other.gameObject.CompareTag("Wall"))
@@ -175,10 +200,15 @@ public class SlimeController : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("SlimeStick");
         }
 
+        if (other.gameObject.CompareTag("SlipperyWall"))
+        {
+            rigidBody.gravityScale = 1f;
+        }
+
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.gray;
         
-        cinemachineVirtual.m_Lens.OrthographicSize = 5;
+        //cinemachineVirtual.m_Lens.OrthographicSize = 5;
         
 
     }

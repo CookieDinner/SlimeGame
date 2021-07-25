@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Wall
   - Key
+  - SpinAttack
+  - SlipperyWall
   layers:
   - Default
   - TransparentFX

@@ -39,10 +39,12 @@ public class Enemy : MonoBehaviour
     }
     public void Die()
     {
+        animator.SetBool("Dead", true);
+
         FindObjectOfType<AudioManager>().Play("SkeletonDeath");
         source.mute = true;
 
-        animator.SetBool("Dead", true);
+        
 
         rb.bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
@@ -60,6 +62,13 @@ public class Enemy : MonoBehaviour
         else
         {
             PlatformPatrol();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("SpinAttack")){
+            TakeDamage(100);
         }
     }
 
