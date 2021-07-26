@@ -172,7 +172,7 @@ MonoBehaviour:
   bodyCollider: {fileID: 5911126853492459038}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   groundDetection: {fileID: 5911126855556289194}
   maxHealth: 100
   mustPatrol: 1
@@ -191,7 +191,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ebf5efd525f26e044a2ce429b69aa54b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.37
+  m_Volume: 0.295
   m_Pitch: 1
   Loop: 1
   Mute: 0

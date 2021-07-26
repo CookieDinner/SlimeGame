@@ -26,8 +26,9 @@ public class SlimeController : MonoBehaviour
     public LineRenderer lineRenderer;
     public CinemachineVirtualCamera cinemachineVirtual;
     public LayerMask enemyLayer;
+    public GameObject groundParticles;
 
-
+    int hasExited = 1;
     public bool canJump = false;
     public Animator animator;
 
@@ -112,6 +113,11 @@ public class SlimeController : MonoBehaviour
     {
         if (startedDragging)
         {
+            if (!canJump)
+            {
+                startedDragging = false;
+                lineRenderer.positionCount = 0;
+            }
             Vector2 draggingPos = Camera.main.ScreenToWorldPoint(touch.position);
             Vector2 resultVector = Vector2.ClampMagnitude(new Vector2(draggingPos.x - dragStartPos.x, draggingPos.y - dragStartPos.y), maxDrag);
             lineRenderer.positionCount = 2;
@@ -137,7 +143,6 @@ public class SlimeController : MonoBehaviour
             {
                 Vector2 force = dragStartPos - dragReleasePos;
                 Vector2 clampedForce = Vector2.ClampMagnitude(force, maxDrag) * power;
-
                 if (Math.Abs(clampedForce.y) > 0.5f || Math.Abs(clampedForce.x) > 0.5f)
                 {
 
@@ -171,50 +176,71 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D other)
     {
-        canJump = false;
-        animator.SetBool("InAir", true);
-        animator.SetFloat("Force", 0f);
-        rigidBody.gravityScale = 2;
+        if (hasExited < 1)
+        {
+            if (startedDragging)
+            {
+                lineRenderer.positionCount = 0;
+            }
+            canJump = false;
+            animator.SetBool("InAir", true);
+            animator.SetFloat("Force", 0f);
+            rigidBody.gravityScale = 2;
+            hasExited += 1;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        FindObjectOfType<AudioManager>().Stop("SwordSlash");
-        if (other.gameObject.CompareTag("Enemy"))
+        if (hasExited > 0)
         {
-            return;
-        }
-        Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
-        hitRotation = Quaternion.Euler(0,0, hitRotation.eulerAngles.z);
-        transform.rotation = hitRotation;
-        canJump = true;
-        canAttack = true;
-        attackPoint.enabled = false;
-        animator.SetBool("InAir", false);
+            hasExited -= 1;
+            FindObjectOfType<AudioManager>().Stop("SwordSlash");
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                return;
+            }
+            Quaternion hitRotation = Quaternion.FromToRotation(Vector2.up, other.contacts[0].normal);
+            hitRotation = Quaternion.Euler(0, 0, hitRotation.eulerAngles.z);
+            transform.rotation = hitRotation;
+            canJump = true;
+            canAttack = true;
+            attackPoint.enabled = false;
+            animator.SetBool("InAir", false);
 
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            rigidBody.gravityScale = 0;
-            FindObjectOfType<AudioManager>().Play("SlimeStick");
-        }
+            if (other.gameObject.CompareTag("Wall"))
+            {
+                rigidBody.gravityScale = 0;
+                FindObjectOfType<AudioManager>().Play("SlimeStick");
+                GameObject particle = Instantiate(groundParticles, groundDetection.position, Quaternion.identity);
+                Destroy(particle, 5);
+            }
 
-        if (other.gameObject.CompareTag("SlipperyWall"))
-        {
-            rigidBody.gravityScale = 1f;
-        }
+            if (other.gameObject.CompareTag("SlipperyWall"))
+            {
+                rigidBody.gravityScale = 1f;
+            }
 
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.gray;
-        
-        //cinemachineVirtual.m_Lens.OrthographicSize = 5;
-        
+            lineRenderer.startColor = Color.white;
+            lineRenderer.endColor = Color.gray;
+
+            //cinemachineVirtual.m_Lens.OrthographicSize = 5;
+        }
 
     }
-
+    int count = 0;
     private void OnCollisionStay2D(Collision2D other)
     {
+        
+        if (animator.GetBool("InAir") && count > 10)
+        {
+            canJump = true;
+            animator.SetBool("InAir", false);
+            count = 0;
+        }
+        count += 1;
         //canJump = true;
         animator.SetFloat("Force", 0f);
         lineRenderer.startColor = Color.white;
