@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public BoxCollider2D bodyCollider;
     public LayerMask wallLayer;
     public Transform groundDetection;
+    public GameObject deathParticles;
 
     public int maxHealth = 100;
     int currentHealth;
@@ -44,7 +45,9 @@ public class Enemy : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("SkeletonDeath");
         source.mute = true;
 
-        
+        GameObject particle = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        Destroy(particle, 5);
+
 
         rb.bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;

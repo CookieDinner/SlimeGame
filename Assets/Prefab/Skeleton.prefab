@@ -174,6 +174,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundDetection: {fileID: 5911126855556289194}
+  deathParticles: {fileID: 3626554327295959000, guid: 01138affd96a88c43a48bb7259e2f569, type: 3}
   maxHealth: 100
   mustPatrol: 1
   groundPatrol: 0

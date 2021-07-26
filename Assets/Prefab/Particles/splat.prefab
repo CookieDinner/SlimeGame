@@ -665,7 +665,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 8.32, z: 0}
+    m_Position: {x: 0, y: 2.85, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 10.69, y: 4.3, z: 1}
     placementMode: 0
@@ -3787,7 +3787,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.41
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3844,7 +3844,7 @@ ParticleSystem:
       serializedVersion: 2
       m_Bits: 128
     maxCollisionShapes: 256
-    quality: 2
+    quality: 0
     voxelSize: 1.02
     collisionMessages: 0
     collidesWithDynamic: 0

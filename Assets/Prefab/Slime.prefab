@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141025569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3730011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3456165702835880421}
@@ -159,8 +159,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.78
-  m_LinearDrag: 0
+  m_Mass: 0.8
+  m_LinearDrag: 0.05
   m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
@@ -181,9 +181,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.01461941, y: -0.021925181}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.38654953
 --- !u!120 &3456165702835880422
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -314,6 +314,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  groundParticles: {fileID: 2049182425781952235, guid: 5244a9598ad55194e95e4d9c971efddf, type: 3}
   canJump: 0
   animator: {fileID: 3456165703903739244}
 --- !u!114 &3456165702835895832
