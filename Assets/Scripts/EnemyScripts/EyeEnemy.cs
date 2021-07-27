@@ -66,7 +66,7 @@ public class EyeEnemy : MonoBehaviour
 
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         AirPatrol();
         if (!isDead)
@@ -75,7 +75,12 @@ public class EyeEnemy : MonoBehaviour
         }
         else
         {
-            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.01f);
+            Debug.Log(rb.velocity.y);
+            if (rb.velocity.y < -7f)
+            {
+                rb.velocity = new Vector2(0, -7f);
+            }
+            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.05f);
             if (groundInfo.collider && groundInfo.collider.tag == "Wall")
             {
                 rb.bodyType = RigidbodyType2D.Static;
