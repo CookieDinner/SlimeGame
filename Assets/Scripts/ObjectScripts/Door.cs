@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     public GameObject Player;
     public Transform RespawnPoint;
     public Animator animator;
+    public int nextScene;
     public bool open = false;
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +38,25 @@ public class Door : MonoBehaviour
     {
         /*Player.transform.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);
         RespawnPoint.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);*/
-        SceneManager.LoadScene("level_2");
+        switch (nextScene)
+        {
+            case 1:
+                SceneManager.LoadScene("level_1");
+                break;
+            case 2:
+                SceneManager.LoadScene("level_2");
+                break;
+            case 3:
+                SceneManager.LoadScene("level_3");
+                break;
+            case 4:
+                SceneManager.LoadScene("level_4");
+                break;
+            case 5:
+                SceneManager.LoadScene("GameOver");
+                break;
+
+        }
     }
 
     IEnumerator ExampleCoroutine()

@@ -36,6 +36,7 @@ public class SlimeController : MonoBehaviour
     public bool invulnerabilitySave = false;
     public bool powerUpActive = false;
     public bool isHoverActive = false;
+    private int hoverCharges = 0;
 
     Vector2 dragStartPos;
     Touch touch;
@@ -53,6 +54,10 @@ public class SlimeController : MonoBehaviour
         attackPoint.enabled = true;
         if (!isInvulnerable)
         {
+            if (isHoverActive)
+            {
+                disableHover();
+            }
             animator.SetTrigger("Attack");
             FindObjectOfType<AudioManager>().Play("SwordSlash");
             Invoke("disableAttackCollider", 0.3f);
@@ -88,18 +93,23 @@ public class SlimeController : MonoBehaviour
 
     public void activateHover()
     {
+        hoverCharges += 1;
         rigidBody.gravityScale = 0;
         Invoke("disableHover", 3f);
     }
 
     void disableHover()
     {
-        if (isHoverActive)
+        if (hoverCharges <= 1)
         {
             isHoverActive = false;
             powerUpActive = false;
             rigidBody.gravityScale = 2f;
             spriteRenderer.color = new Color(0.7168476f, 0.8396226f, 0.7247403f);
+        }
+        else
+        {
+            hoverCharges -= 1;
         }
     }
 
@@ -271,6 +281,7 @@ public class SlimeController : MonoBehaviour
             }
             if (isHoverActive)
             {
+                hoverCharges = 0;
                 disableHover();
             }
             

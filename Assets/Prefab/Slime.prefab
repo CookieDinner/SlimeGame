@@ -160,7 +160,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.8
-  m_LinearDrag: 0.05
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
   m_Material: {fileID: 0}
@@ -352,7 +352,6 @@ MonoBehaviour:
   keyParticles: {fileID: 0}
   powerUpParticles: {fileID: 2049182425781952235, guid: 5244a9598ad55194e95e4d9c971efddf, type: 3}
   spriteRenderer: {fileID: 3456165703903739247}
-  coroutineManager: {fileID: 0}
 --- !u!1 &3456165703903739233
 GameObject:
   m_ObjectHideFlags: 0
