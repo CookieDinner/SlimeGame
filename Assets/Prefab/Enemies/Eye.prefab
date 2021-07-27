@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6072977243147059440}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -36.731766, y: -192.5, z: 0}
   m_LocalScale: {x: -2, y: 2, z: 1}
   m_Children:
@@ -149,14 +149,14 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.295
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 30
+  MaxDistance: 27.1
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 1
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  flySpeed: 3
+  flySpeed: 1
   distance: 5
   animator: {fileID: 6072977243147059454}
   source: {fileID: 6072977243147059442}

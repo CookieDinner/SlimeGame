@@ -75,7 +75,6 @@ public class EyeEnemy : MonoBehaviour
         }
         else
         {
-            Debug.Log(rb.velocity.y);
             if (rb.velocity.y < -7f)
             {
                 rb.velocity = new Vector2(0, -7f);
@@ -110,6 +109,11 @@ public class EyeEnemy : MonoBehaviour
             currentVector = Vector2.up;
         }
         currentY = transform.position.y;
+    }
+
+    void FlapWings()
+    {
+        source.Play();
     }
 
 }
