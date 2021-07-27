@@ -30,7 +30,7 @@ public class PlayerCollect : MonoBehaviour
         {
             if (other.gameObject.CompareTag("JumpPower"))
             {
-                FindObjectOfType<AudioManager>().Play("KeyCollect");
+                FindObjectOfType<AudioManager>().Play("PickupPowerUp");
 
                 GameObject particle = Instantiate(powerUpParticles, other.transform.position, Quaternion.identity);
                 Destroy(particle, 5);
@@ -47,7 +47,7 @@ public class PlayerCollect : MonoBehaviour
 
             if (other.gameObject.CompareTag("InvulnPower"))
             {
-                FindObjectOfType<AudioManager>().Play("KeyCollect");
+                FindObjectOfType<AudioManager>().Play("PickupPowerUp");
 
                 GameObject particle = Instantiate(powerUpParticles, other.transform.position, Quaternion.identity);
                 Destroy(particle, 5);
@@ -65,7 +65,7 @@ public class PlayerCollect : MonoBehaviour
         {
             if (other.gameObject.CompareTag("HoverPower"))
             {
-                FindObjectOfType<AudioManager>().Play("KeyCollect");
+                FindObjectOfType<AudioManager>().Play("PickupPowerUp");
 
                 GameObject particle = Instantiate(powerUpParticles, other.transform.position, Quaternion.identity);
                 Destroy(particle, 5);
