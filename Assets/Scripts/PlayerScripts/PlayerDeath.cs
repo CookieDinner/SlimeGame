@@ -9,7 +9,6 @@ public class PlayerDeath : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Spikes") || collision.gameObject.CompareTag("Enemy"))
         {
-            ;
             if (!GameObject.FindGameObjectWithTag("Player").GetComponent<SlimeController>().isInvulnerable)
             {
                 FindObjectOfType<AudioManager>().Play("SlimeDeath");
