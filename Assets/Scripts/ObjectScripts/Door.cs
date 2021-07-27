@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
@@ -34,8 +35,9 @@ public class Door : MonoBehaviour
 
     void Teleport()
     {
-        Player.transform.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);
-        RespawnPoint.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);
+        /*Player.transform.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);
+        RespawnPoint.position = new Vector2(Teleport2.transform.position.x, Teleport2.transform.position.y);*/
+        SceneManager.LoadScene("level_2");
     }
 
     IEnumerator ExampleCoroutine()
