@@ -17,11 +17,11 @@ public class Door : MonoBehaviour
             Player = GameObject.FindGameObjectWithTag("Player");
             if (collision.gameObject.tag == "Player")
             {
-                if (ScoreManager.instance.score >= 1)
+                if (ScoreManager.instance.score >= 4)
                 {
                     FindObjectOfType<AudioManager>().Play("DoorOpen");
                     animator.SetInteger("OpenDoor", 1);
-                    ScoreManager.instance.ChangeScore(-1);
+                    ScoreManager.instance.ChangeScore(-4);
                     StartCoroutine(ExampleCoroutine());
                 }
                 else

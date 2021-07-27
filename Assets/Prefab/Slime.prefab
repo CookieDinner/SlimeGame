@@ -306,6 +306,8 @@ MonoBehaviour:
   maxDrag: 4
   attackRange: 2
   attackRate: 2
+  canAttack: 1
+  isPowerJumping: 0
   attackPoint: {fileID: 2082977599}
   groundDetection: {fileID: 2141025570}
   rigidBody: {fileID: 3456165702835880420}
@@ -315,8 +317,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundParticles: {fileID: 2049182425781952235, guid: 5244a9598ad55194e95e4d9c971efddf, type: 3}
+  spriteRenderer: {fileID: 3456165703903739247}
+  isInvulnerable: 0
   canJump: 0
   animator: {fileID: 3456165703903739244}
+  invulnerabilitySave: 0
+  powerUpActive: 0
+  isHoverActive: 0
 --- !u!114 &3456165702835895832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +349,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinValue: 1
+  keyParticles: {fileID: 0}
+  powerUpParticles: {fileID: 2049182425781952235, guid: 5244a9598ad55194e95e4d9c971efddf, type: 3}
+  spriteRenderer: {fileID: 3456165703903739247}
+  coroutineManager: {fileID: 0}
 --- !u!1 &3456165703903739233
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +426,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 73c45aafe1aa86e47a2d4db0528e387e, type: 3}
-  m_Color: {r: 0.7168476, g: 0.8396226, b: 0.72474027, a: 1}
+  m_Color: {r: 0.7168476, g: 0.8396226, b: 0.7247403, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

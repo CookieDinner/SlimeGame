@@ -22,6 +22,6 @@ public class ScoreManager : MonoBehaviour
     public void ChangeScore(int coinValue)
     {
         score += coinValue;
-        text.text = "x" + score;
+        text.text = score + " / 4";
     }
 }

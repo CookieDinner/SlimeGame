@@ -11,6 +11,10 @@ TagManager:
   - Key
   - SpinAttack
   - SlipperyWall
+  - Checkpoint
+  - JumpPower
+  - InvulnPower
+  - HoverPower
   layers:
   - Default
   - TransparentFX
