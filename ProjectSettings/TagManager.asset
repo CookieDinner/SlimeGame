@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spikes
+  - Cinemachine
+  - Enemy
+  - Wall
+  - Key
+  - SpinAttack
+  - SlipperyWall
+  - Checkpoint
+  - JumpPower
+  - InvulnPower
+  - HoverPower
   layers:
   - Default
   - TransparentFX
@@ -11,9 +22,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Enemy
+  - Wall
+  - CollisionsEtc
   - 
   - 
   - 
@@ -38,6 +49,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1746936977
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 2500414979
     locked: 0
